@@ -41,15 +41,18 @@ namespace DeveloperTest.Controllers
             if (entity == null)
                 return NotFound("Invoice Could not be found");
 
+            if (entity.IsPaid)
+                return BadRequest("It is already paid");
 
-            if (entity.Amount < Amount)
+
+            if (entity.Amount > Amount)
                 return BadRequest("Amount Is not Enough");
 
 
             entity.IsPaid = true;
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(entity);
         }
 
         [HttpPatch]
@@ -57,9 +60,9 @@ namespace DeveloperTest.Controllers
         {
             var result = await _context.Inovieces.FirstOrDefaultAsync(n => n.ID == ID && n.DateDeleted == null);
 
-            if (result==null)
+            if (result == null)
                 return NotFound();
-            
+
 
             if (entity == null)
                 return BadRequest("Invoice Can not be null");

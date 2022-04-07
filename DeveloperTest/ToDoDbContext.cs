@@ -13,6 +13,14 @@ namespace DeveloperTest
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            SeedData(modelBuilder);
+        }
+
+        public DbSet<Invoice> Inovieces { get; set; }
+
+
+        private void SeedData(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Invoice>().HasData(new Invoice()
             {
                 ID = 1,
@@ -22,9 +30,25 @@ namespace DeveloperTest
                 DateChanged = null,
                 DateDeleted = null
             });
+            modelBuilder.Entity<Invoice>().HasData(new Invoice()
+            {
+                ID = 2,
+                Amount = 150,
+                IsPaid = true,
+                DateCreated = DateTime.Now,
+                DateChanged = null,
+                DateDeleted = null
+            });
+            modelBuilder.Entity<Invoice>().HasData(new Invoice()
+            {
+                ID = 3,
+                Amount = 200,
+                IsPaid = false,
+                DateCreated = DateTime.Now,
+                DateChanged = null,
+                DateDeleted = null
+            });
         }
-
-        public DbSet<Invoice> Inovieces { get; set; }
     }
 }
 
